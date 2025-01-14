@@ -1,0 +1,26 @@
+//Items
+item.overpowered_axe.name=Overpowered Axe
+item.overpowered_hoe.name=Overpowered Hoe
+item.overpowered_pickaxe.name=Overpowered Pickaxe
+item.overpowered_shovel.name=Overpowered Shovel
+item.overpowered_sword.name=Overpowered Sword
+
+item.overpowered_helmet.name=Overpowered Helmet
+item.overpowered_chestplate.name=Overpowered Chestplate
+item.overpowered_leggings.name=Overpowered Leggings
+item.overpowered_boots.name=Overpowered Boots
+
+item.overpowered_bow.name=Overpowered Bow
+item.overpowered_arrow.name=Overpowered Arrow
+item.overpowered_fishing_rod.name=Overpowered Fishing Rod
+item.overpowered_shield.name=Overpowered Shield
+item.overpowered_shears.name=Overpowered Shears
+item.overpowered_flint_and_steel.name=Overpowered Flint and Steel
+item.overpowered_elytra.name=Overpowered Elytra
+
+//Tabs
+itemGroup.overpoweredtoolstab=Overpowered Tools
+
+//Entities
+entity.test.name=Test
+entity.overpowered_arrow.name=Overpowered Arrow

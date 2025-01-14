@@ -1,0 +1,16 @@
+[
+{
+  "modid": "overpoweredtools",
+  "name": "Overpowered Tools",
+  "description": "A mod that adds overpowered tools, weapons, and armor to the game that can be used for modpack or singleplayer testing. The items are not obtainable in survival nor are they meant to be. The values for how powerful items can be are modifiable in configuration file for this mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://www.curseforge.com/members/pc101/projects",
+  "updateUrl": "",
+  "authorList": ["PC101"],
+  "credits": "TurtyWurty for several of his 1.12.2 tutorials: https://www.youtube.com/playlist?list=PLaevjqy3XufYkNu2PTTReZm0sSCshr-dW",
+  "logoFile": "/oplogo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]
