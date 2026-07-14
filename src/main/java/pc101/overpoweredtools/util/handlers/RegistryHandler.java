@@ -1,5 +1,7 @@
 package pc101.overpoweredtools.util.handlers;
 
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import pc101.overpoweredtools.OverpoweredTools;
@@ -13,6 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import pc101.overpoweredtools.recipes.CraftingRecipes;
+import pc101.overpoweredtools.util.Reference;
 
 @EventBusSubscriber
 public class RegistryHandler
@@ -37,6 +40,12 @@ public class RegistryHandler
     public static void preInitRegistries(FMLPreInitializationEvent event)
     {
         EntityInit.registerEntities();
+    }
+
+    @SubscribeEvent
+    public static void registerRecipes(RegistryEvent.Register<IRecipe> event)
+    {
+        event.getRegistry().register(new CraftingRecipes.Decoration().setRegistryName(Reference.MOD_ID, "overpoweredshielddecoration"));
     }
 
     public static void initRegistries()

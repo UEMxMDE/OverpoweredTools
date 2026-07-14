@@ -18,6 +18,24 @@ item.overpowered_shears.name=Overpowered Shears
 item.overpowered_flint_and_steel.name=Overpowered Flint and Steel
 item.overpowered_elytra.name=Overpowered Elytra
 
+//Overpowered Shield color names
+item.overpowered_shield.white.name=White Overpowered Shield
+item.overpowered_shield.orange.name=Orange Overpowered Shield
+item.overpowered_shield.magenta.name=Magenta Overpowered Shield
+item.overpowered_shield.lightBlue.name=Light Blue Overpowered Shield
+item.overpowered_shield.yellow.name=Yellow Overpowered Shield
+item.overpowered_shield.lime.name=Lime Overpowered Shield
+item.overpowered_shield.pink.name=Pink Overpowered Shield
+item.overpowered_shield.gray.name=Gray Overpowered Shield
+item.overpowered_shield.silver.name=Light Gray Overpowered Shield
+item.overpowered_shield.cyan.name=Cyan Overpowered Shield
+item.overpowered_shield.purple.name=Purple Overpowered Shield
+item.overpowered_shield.blue.name=Blue Overpowered Shield
+item.overpowered_shield.brown.name=Brown Overpowered Shield
+item.overpowered_shield.green.name=Green Overpowered Shield
+item.overpowered_shield.red.name=Red Overpowered Shield
+item.overpowered_shield.black.name=Black Overpowered Shield
+
 //Tabs
 itemGroup.overpoweredtoolstab=Overpowered Tools
 

@@ -38,7 +38,7 @@ public class OverpoweredTools
     public void init(FMLInitializationEvent event)
     {
         CraftingRecipes.init();
-        new CraftingRecipes.Decoration();
+        //new CraftingRecipes.Decoration();
         //CraftingRecipes.Decoration.matches();
     }
 
