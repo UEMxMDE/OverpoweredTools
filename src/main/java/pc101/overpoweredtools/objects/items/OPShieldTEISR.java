@@ -66,6 +66,11 @@ public class OPShieldTEISR extends TileEntityItemStackRenderer {
                 Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("overpoweredtools:textures/items/overpowered_shield_base_nopattern.png"));
             }
 
+            // I added the line below to fix a bug where:
+            // 1. A banner on an overpowered shield would not render in first person
+            // 2. Nor would the banner render if an overpowered shield item was dropped and viewed from behind.
+            // This bug only existed because this overpowered shield uses transparent textures in places that allow for the viewing of banners on the shield from behind the shield.
+            GlStateManager.disableCull();
             GlStateManager.pushMatrix();
             GlStateManager.scale(1.0F, -1.0F, -1.0F);
             //this.modelShield.render();
