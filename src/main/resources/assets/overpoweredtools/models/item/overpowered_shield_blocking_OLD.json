@@ -1,5 +1,5 @@
 {
-  "parent": "builtin/entity",
+  "parent": "overpoweredtools:item/overpowered_shield",
   "display": {
     "thirdperson_righthand": {
       "rotation": [ 45, 135, 0 ],

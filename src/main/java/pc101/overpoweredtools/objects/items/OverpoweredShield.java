@@ -36,6 +36,10 @@ public class OverpoweredShield extends ItemShield
         });
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, ItemArmor.DISPENSER_BEHAVIOR);    // Figure out what this line does
 
+        // This line make this shield use the custom TileEntityItemStackRenderer that I made called OPShieldTEISR.
+        // The reason for this is to make banners able to be rendered on the shield.
+        this.setTileEntityItemStackRenderer(new OPShieldTEISR());
+
         ItemInit.ITEMS.add(this);
 
         //TileEntityItemStackRenderer a = new TileEntityItemStackRenderer();            // these 2 lines came from here: https://forums.minecraftforge.net/topic/65787-solved1122how-to-get-a-model-for-a-shield/
