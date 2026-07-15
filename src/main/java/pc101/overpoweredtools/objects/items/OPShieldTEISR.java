@@ -27,7 +27,7 @@ public class OPShieldTEISR extends TileEntityItemStackRenderer {
     private static final BannerTextures.Cache OP_SHIELD_DESIGNS =
             new BannerTextures.Cache(
                     "OVERPOWERED_SHIELD",
-                    new ResourceLocation("overpoweredtools:textures/items/overpowered_shield_base.png"),  // The texture of any overpowred shield that has a banner on it (not the banner itself but the rest of the shield texture)
+                    new ResourceLocation("overpoweredtools:textures/items/overpowered_shield_base.png"),  // The texture of any overpowered shield that DOES NOT have a banner on it.
                     "textures/entity/shield/"   // Every banner pattern on this shield
             );
 
@@ -59,10 +59,11 @@ public class OPShieldTEISR extends TileEntityItemStackRenderer {
             else
             {
                 // In the line below, I replaced BannerTextures.SHIELD_BASE_TEXTURE (from the TEISR parent class) with
-                // new ResourceLocation("overpoweredtools:textures/items/overpowered_shield_base.png")
-                // because I wanted overpowered shields that had NOT been crafted with a banner yet to
-                // use my custom shield base texture instead of the vanilla shield base texture.
-                Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("overpoweredtools:textures/items/overpowered_shield_base.png"));
+                // new ResourceLocation("overpoweredtools:textures/items/overpowered_shield_base_nopattern.png")
+                // because I wanted overpowered shields that had been crafted with a banner to use my custom shield
+                // base "nopattern" texture instead of the vanilla shield base texture.
+                // (not the banner itself but the rest of the shield texture)
+                Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("overpoweredtools:textures/items/overpowered_shield_base_nopattern.png"));
             }
 
             GlStateManager.pushMatrix();
