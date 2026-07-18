@@ -1,6 +1,5 @@
 package pc101.overpoweredtools.objects.items;
 
-import net.minecraft.block.BlockChest;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelShield;
 import net.minecraft.client.renderer.BannerTextures;
@@ -19,7 +18,6 @@ import pc101.overpoweredtools.init.ItemInit;
 @SideOnly(Side.CLIENT)
 public class OPShieldTEISR extends TileEntityItemStackRenderer {
     public static OPShieldTEISR instance;   // May be redundant and thus may need to be removed.
-    private final TileEntityChest chestBasic = new TileEntityChest(BlockChest.Type.BASIC);
     private final TileEntityBanner banner = new TileEntityBanner();
     private final ModelShield modelShield = new ModelShield();
     private final ModelOPShield modelOPShield = new ModelOPShield();
@@ -27,8 +25,8 @@ public class OPShieldTEISR extends TileEntityItemStackRenderer {
     private static final BannerTextures.Cache OP_SHIELD_DESIGNS =
             new BannerTextures.Cache(
                     "OVERPOWERED_SHIELD",
-                    new ResourceLocation("overpoweredtools:textures/items/overpowered_shield_base.png"),  // The texture of any overpowered shield that DOES NOT have a banner on it.
-                    "textures/entity/shield/"   // Every banner pattern on this shield
+                    new ResourceLocation("overpoweredtools:textures/entity/overpowered_shield_base.png"),  // The texture of any overpowered shield that DOES NOT have a banner on it.
+                    "textures/entity/shield/"   // Every banner pattern on this shield. This line is currently pointing to the vanilla directory of textures/entity/shield/
             );
 
     public void renderByItem(ItemStack itemStackIn)
@@ -63,23 +61,23 @@ public class OPShieldTEISR extends TileEntityItemStackRenderer {
                 // because I wanted overpowered shields that had been crafted with a banner to use my custom shield
                 // base "nopattern" texture instead of the vanilla shield base texture.
                 // (not the banner itself but the rest of the shield texture)
-                Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("overpoweredtools:textures/items/overpowered_shield_base_nopattern.png"));
+                Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("overpoweredtools:textures/entity/overpowered_shield_base_nopattern.png"));
             }
 
-            // I added the line below to fix a bug where:
+            // I added the line below (GlStateManager.disableCull();) to fix a bug where:
             // 1. A banner on an overpowered shield would not render in first person
             // 2. Nor would the banner render if an overpowered shield item was dropped and viewed from behind.
             // This bug only existed because this overpowered shield uses transparent textures in places that allow for the viewing of banners on the shield from behind the shield.
+            // Note: GlStateManager.disableCull(); must be called BEFORE the this.modelShield.render(); call or else it will not fix this bug at all.
             GlStateManager.disableCull();
             GlStateManager.pushMatrix();
             GlStateManager.scale(1.0F, -1.0F, -1.0F);
             //this.modelShield.render();
-            this.modelOPShield.render();    // The vanilla ModelShield.java can be used as well, but I don't know if that is a good idea.
+            this.modelOPShield.render();    // The vanilla ModelShield.java can be used as well, but I don't know if that is a good idea. Maybe it's better to use my own model even though it extends the vanilla ModelShield because I don't know if I want changes made to ModelShield caused by other mods to be applied to this shield as well.
+            // If cull is ever disabled, it needs to be re-enabled (see the GlStateManager.enableCull(); line below) to prevent potential rendering bugs in other parts of Minecraft.
+            // In the case of this shield, GlStateManager.enableCull(); needs to be called AFTER the this.modelShield.render(); call or else it will reintroduce the bug that the GlStateManager.disableCull(); line above is supposed to fix.
+            GlStateManager.enableCull();
             GlStateManager.popMatrix();
-        }
-        else
-        {
-            TileEntityRendererDispatcher.instance.render(this.chestBasic, 0.0D, 0.0D, 0.0D, 0.0F, partialTicks);
         }
     }
 }

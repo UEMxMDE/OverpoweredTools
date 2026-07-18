@@ -37,6 +37,13 @@ public class ModelOPShield extends ModelShield/* implements IBakedModel*/ {
     }
 
     /*
+    According to the forge docs, my model (this file) "must first satisfy the condition that its model returns true for IBakedModel#isBuiltInRenderer"
+    However, implementing IBakedModel and returning true for isBuiltInRenderer() did not make a difference in rendering this model, so I decided to comment out everything relating to IBakedModel.
+
+    The Forge docs in question: https://docs.minecraftforge.net/en/1.12.x/rendering/teisr/
+     */
+
+    /*
     @Override
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
         return Collections.emptyList();
