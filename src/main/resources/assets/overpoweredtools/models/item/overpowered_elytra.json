@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "overpoweredtools:items/elytra"
+    "layer0": "overpoweredtools:items/overpowered_elytra"
   },
   "overrides": [
     {
