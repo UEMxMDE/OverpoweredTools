@@ -40,6 +40,8 @@ public class OverpoweredTools
         CraftingRecipes.init();
         //new CraftingRecipes.Decoration();
         //CraftingRecipes.Decoration.matches();
+
+        proxy.render();
     }
 
     @EventHandler

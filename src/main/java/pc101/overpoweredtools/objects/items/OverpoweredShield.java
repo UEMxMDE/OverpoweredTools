@@ -26,7 +26,7 @@ public class OverpoweredShield extends ItemShield
         setCreativeTab(OverpoweredTools.OVERPOWEREDTOOLSTAB);
         setMaxDamage(10);
 
-        addPropertyOverride(new ResourceLocation("overpowered_shield_blocking"), new IItemPropertyGetter()  // Figure out what this does
+        addPropertyOverride(new ResourceLocation("overpowered_shield_blocking"), new IItemPropertyGetter()  // Figure out what this does. Once you figure it out, then figure out whether it is necessary for this file and also figure out whether it is necessary for all other files in my mod that have this block of code.
         {
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
@@ -77,11 +77,13 @@ public class OverpoweredShield extends ItemShield
 
         // Option 3 (see Item.java) [works]
         return stack.getItem() == ItemInit.OVERPOWERED_SHIELD;
+
+        // Which one of these is better, option 1 or option 3?
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) // Figure out what this method does
     {
         ItemBanner.appendHoverTextFromTileEntityTag(stack, tooltip);
     }

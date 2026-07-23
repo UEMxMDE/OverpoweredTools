@@ -43,7 +43,7 @@ public class OPShieldTEISR extends TileEntityItemStackRenderer {
             this.banner.setItemValues(p_192838_1_, false);
             TileEntityRendererDispatcher.instance.render(this.banner, 0.0D, 0.0D, 0.0D, 0.0F, partialTicks);
         }
-        else if (item == ItemInit.OVERPOWERED_SHIELD)
+        else if (item == ItemInit.OVERPOWERED_SHIELD)   // Connects this renderer to the Overpowered Shield item.
         {
             if (p_192838_1_.getSubCompound("BlockEntityTag") != null)
             {
