@@ -58,6 +58,7 @@ public class CraftingRecipes
         }
     }
 
+    // Allows the Overpowered Shield to be crafted with banners in the same way the vanilla shield is crafted with banners.
     public static class Decoration extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
     {
         public boolean matches(InventoryCrafting inv, World worldIn)
@@ -82,7 +83,7 @@ public class CraftingRecipes
                     }
                     else
                     {
-                        if (itemstack2.getItem() != ItemInit.OVERPOWERED_SHIELD)
+                        if (itemstack2.getItem() != ItemInit.OVERPOWERED_SHIELD)    // Used to be connected to the vanilla shield.
                         {
                             return false;
                         }
@@ -127,7 +128,7 @@ public class CraftingRecipes
                     {
                         itemstack = itemstack2;
                     }
-                    else if (itemstack2.getItem() == ItemInit.OVERPOWERED_SHIELD)
+                    else if (itemstack2.getItem() == ItemInit.OVERPOWERED_SHIELD)   // Used to be connected to the vanilla shield.
                     {
                         itemstack1 = itemstack2.copy();
                     }
