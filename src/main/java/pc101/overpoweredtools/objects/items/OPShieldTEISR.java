@@ -18,11 +18,11 @@ import pc101.overpoweredtools.init.ItemInit;
 @SideOnly(Side.CLIENT)
 public class OPShieldTEISR extends TileEntityItemStackRenderer {
     public static OPShieldTEISR instance;   // May be redundant and thus may need to be removed.
-    private final TileEntityBanner banner = new TileEntityBanner();
-    private final ModelShield modelShield = new ModelShield();
-    private final ModelOPShield modelOPShield = new ModelOPShield();
+    public final TileEntityBanner banner = new TileEntityBanner();
+    public final ModelShield modelShield = new ModelShield();
+    public final ModelOPShield modelOPShield = new ModelOPShield();
 
-    private static final BannerTextures.Cache OP_SHIELD_DESIGNS =
+    public static final BannerTextures.Cache OP_SHIELD_DESIGNS =
             new BannerTextures.Cache(
                     "OVERPOWERED_SHIELD",
                     new ResourceLocation("overpoweredtools:textures/entity/overpowered_shield_base.png"),  // The texture of any overpowered shield that DOES NOT have a banner on it.

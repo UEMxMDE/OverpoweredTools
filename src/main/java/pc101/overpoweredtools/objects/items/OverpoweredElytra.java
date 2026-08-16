@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemArmor;
@@ -47,19 +48,21 @@ import javax.annotation.Nullable;
 
 public class OverpoweredElytra extends ItemElytra
 {
+    //public int ticksOPElytraFlying;
+
     public OverpoweredElytra(String name)
     {
         setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(OverpoweredTools.OVERPOWEREDTOOLSTAB);
-        setMaxDamage(1000);
+        setMaxDamage(30);
 
         addPropertyOverride(new ResourceLocation("broken"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
             {
-                return ItemElytra.isUsable(stack) ? 0.0F : 1.0F;
+                return OverpoweredElytra.isUsable(stack) ? 0.0F : 1.0F;
             }
         });
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, ItemArmor.DISPENSER_BEHAVIOR);
@@ -115,6 +118,36 @@ public class OverpoweredElytra extends ItemElytra
     public EntityEquipmentSlot getEquipmentSlot(ItemStack stack) {
         // In Item.java, this line is return null;. I had to change it to EntityEquipmentSlot.CHEST because otherwise SHIFT-Left Clicking this elytra in your inventory would not equip this elytra.
         return EntityEquipmentSlot.CHEST;
+    }
+
+    // Handles durability of the elytra, although I have decided to let OPElytraHandlerServer deal with durability for now.
+    /*
+    @Override
+    public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
+    {
+        if (itemStack.getItem() instanceof OverpoweredElytra && OverpoweredElytra.isUsable(itemStack))
+        {
+            if(player.isElytraFlying())
+            {
+                ++ticksOPElytraFlying;
+            }
+            else
+            {
+                ticksOPElytraFlying = 0;
+            }
+
+            if ((ticksOPElytraFlying + 1) % 40 == 0)    // For some reason if I want this elytra to take damage at the same rate as the vanilla elytra I needed to use "(variable + 1) % 40 == 0" instead of % 20 like the vanilla elytra does.
+            {
+                itemStack.damageItem(1, player);
+            }
+        }
+    }
+    */
+
+    @Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+    {
+        return false;   // I am temporarily setting this to false.
     }
 
     // Does not work, I'm not 100% sure what it is supposed to do.

@@ -19,9 +19,10 @@ import pc101.overpoweredtools.util.Reference;
 @SideOnly(Side.CLIENT)
 public class OpElytraLayerElytra extends LayerElytra
 {
-    private static final ResourceLocation TEXTURE_OVERPOWERED_ELYTRA = new ResourceLocation(Reference.MOD_ID + ":textures/entity/overpowered_elytra.png");
-    protected final RenderLivingBase<?> renderPlayer;
-    private final ModelElytra modelElytra = new ModelElytra();
+    public static final ResourceLocation TEXTURE_OVERPOWERED_ELYTRA = new ResourceLocation(Reference.MOD_ID + ":textures/entity/overpowered_elytra.png");
+    public final RenderLivingBase<?> renderPlayer;
+    public final ModelElytra modelElytra = new ModelElytra();
+    public final ModelOPElytra modelOPElytra = new ModelOPElytra(); // The vanilla ModelElytra.java can be used as well, but I don't know if that is a good idea. Maybe it's better to use my own model even though it extends the vanilla ModelElytra because I don't know if I want changes made to ModelElytra caused by other mods to be applied to this elytra as well.
 
     public OpElytraLayerElytra(RenderLivingBase<?> p_i47185_1_) {
         super(p_i47185_1_);
@@ -42,9 +43,9 @@ public class OpElytraLayerElytra extends LayerElytra
             {
                 AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entitylivingbaseIn;
 
-                if (abstractclientplayer.isPlayerInfoSet() && abstractclientplayer.getLocationElytra() != null)
+                if (abstractclientplayer.isPlayerInfoSet() && abstractclientplayer.getLocationElytra() != null) // abstractclientplayer.getLocationElytra() is hard-coded to the vanilla elytra. Check if it is necessary to replace this with my custom elytra or to keep this code the way it is.
                 {
-                    this.renderPlayer.bindTexture(abstractclientplayer.getLocationElytra());
+                    this.renderPlayer.bindTexture(abstractclientplayer.getLocationElytra());    // abstractclientplayer.getLocationElytra() is hard-coded to the vanilla elytra. Check if it is necessary to replace this with my custom elytra or to keep this code the way it is.
                 }
                 else if (abstractclientplayer.hasPlayerInfo() && abstractclientplayer.getLocationCape() != null && abstractclientplayer.isWearing(EnumPlayerModelParts.CAPE))
                 {
@@ -62,13 +63,18 @@ public class OpElytraLayerElytra extends LayerElytra
 
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, 0.0F, 0.125F);
-            this.modelElytra.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entitylivingbaseIn);
-            this.modelElytra.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+            this.modelOPElytra.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entitylivingbaseIn);
+            this.modelOPElytra.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 
             if (itemstack.isItemEnchanted())
             {
-                LayerArmorBase.renderEnchantedGlint(this.renderPlayer, entitylivingbaseIn, this.modelElytra, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale);
+                LayerArmorBase.renderEnchantedGlint(this.renderPlayer, entitylivingbaseIn, this.modelOPElytra, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale);
             }
+
+            // If this line is not included, then if the player equips an enchanted overpowered elytra, the knowledge book button in the survival mode player's inventory will turn into a dark shade of opaque purple.
+            // This is because LayerArmorBase#renderEnchantedGlint never resets the GlStateManager.color() back to white for some reason.
+            // To make things weirder, the vanilla LayerElytra does not have the line below and yet the enchanted vanilla elytra does not have this bug. Why does a custom elytra renderer need the line below but not the vanilla elytra renderer (a.k.a. LayerElytra.java)?
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
             GlStateManager.disableBlend();
             GlStateManager.popMatrix();
