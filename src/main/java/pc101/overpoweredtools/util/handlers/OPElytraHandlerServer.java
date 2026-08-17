@@ -60,21 +60,25 @@ public class OPElytraHandlerServer
                 {
                     player.setElytraFlying();
 
-                    // The below if statements and else statement are for making the op elytra take durability damage in the same way the vanilla elytra takes durability damage.
-                    // The below if statements and else statement are copied and modified from EntityLivingBase#onUpdate and EntityLivingBase#updateElytra.
-                    if (player.isElytraFlying())
+                    // If I did not include the if statement below, ticksOPElytraFlying would be called twice by being called once per tick phase. As a result the overpowered elytra would lose its durability twice as fast as the vanilla elytra. This is why in the previous commit the math for decrementing durability from the overpowered elytra had to be % 40 to match the vanilla elytra even though the vanilla elytra uses % 20 instead.
+                    if(event.phase == TickEvent.Phase.START) // TickEvent.Phase.END would work too.
                     {
-                        //++ticksOPElytraFlying;
-                        ticksOPElytraFlying.put(player.getUniqueID(), 1 + ticksOPElytraFlying.getOrDefault(player.getUniqueID(), 0));
-                    }
-                    else
-                    {
-                        //ticksOPElytraFlying = 0;
-                        ticksOPElytraFlying.put(player.getUniqueID(), 0);
-                    }
-                    if ((ticksOPElytraFlying.getOrDefault(player.getUniqueID(), 0) + 1) % 40 == 0)  // For some reason if I want this elytra to take damage at the same rate as the vanilla elytra I needed to use "(variable + 1) % 40 == 0" instead of % 20 like the vanilla elytra does.
-                    {
-                        chest.damageItem(1, player);
+                        // The below if statements and else statement are for making the overpowered elytra take durability damage in the same way the vanilla elytra takes durability damage.
+                        // The below if statements and else statement are copied and modified from EntityLivingBase#onUpdate and EntityLivingBase#updateElytra.
+                        if (player.isElytraFlying())
+                        {
+                            //++ticksOPElytraFlying;
+                            ticksOPElytraFlying.put(player.getUniqueID(), 1 + ticksOPElytraFlying.getOrDefault(player.getUniqueID(), 0));
+                        }
+                        else
+                        {
+                            //ticksOPElytraFlying = 0;
+                            ticksOPElytraFlying.put(player.getUniqueID(), 0);
+                        }
+                        if ((ticksOPElytraFlying.getOrDefault(player.getUniqueID(), 0) + 1) % 20 == 0)
+                        {
+                            chest.damageItem(1, player);
+                        }
                     }
 
                     // This if statement determines when the overpowered elytra is supposed to stop flying.
