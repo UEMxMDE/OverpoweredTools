@@ -39,6 +39,7 @@ public class OPElytraHandlerClient
 
             if (isJumpKeyPressed && !lastJump && !player.onGround && player.motionY < 0.0D && !player.isElytraFlying() && !player.isInWater() && !player.capabilities.isFlying && !player.isRiding())
             {
+                // For some reason, every line inside the if statement above (and not the if statement itself) only gets executed when event.phase == TickEvent.Phase.END if the tick phase is not specified.
                 ItemStack chest = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 if (chest.getItem() instanceof OverpoweredElytra && OverpoweredElytra.isUsable(chest))
                 {
@@ -47,6 +48,16 @@ public class OPElytraHandlerClient
                     //OPElytraHandlerServer.flightServer(event);
                     NetworkHandler.INSTANCE.sendToServer(new PacketOPElytraFlying());
                 }
+            }
+            else if(lastJump && player.capabilities.isFlying)
+            {
+                /*
+                This "else if" block of code fixes a bug where the code to send the flight packet to the server (the NetworkHandler.INSTANCE line above) would sometimes be fired twice due to having to either:
+                1. Double press space to exit creative flight so the player can fall and then enter elytra flight.
+                2. Double press space to enter creative flight.
+                 */
+
+                return;
             }
 
             lastJump = isJumpKeyPressed;

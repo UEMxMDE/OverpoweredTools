@@ -1,11 +1,15 @@
 package pc101.overpoweredtools.util.handlers;
 
+import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemElytra;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerInteractionManager;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -52,6 +56,7 @@ public class OPElytraHandlerServer
             //if(player.motionY != 0.0D) player.sendMessage(new TextComponentString(event.phase + " motionY = " + player.motionY));
             //if(player.fallDistance != 0.0F) player.sendMessage(new TextComponentString(event.phase + " fallDistance = " + player.fallDistance));
             //if(player.motionX != 0.0D || player.motionY != 0.0D || player.motionZ != 0.0D) player.sendMessage(new TextComponentString(/*event.phase +*/ "\nmotionX = " + player.motionX + "\nmotionY = " + player.motionY + "\nmotionZ = " + player.motionZ));
+            //if(player.fallDistance != 0.0F && event.phase == TickEvent.Phase.START) player.sendMessage(new TextComponentString("fallDistance = " + player.fallDistance));
 
             ItemStack chest = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
             if (chest.getItem() instanceof OverpoweredElytra && OverpoweredElytra.isUsable(chest))
@@ -59,6 +64,12 @@ public class OPElytraHandlerServer
                 if(/*shouldFly*/ shouldFly.getOrDefault(player.getUniqueID(), false))
                 {
                     player.setElytraFlying();
+
+                    // Doesn't do much of anything as a "fix" unless it is allowed to be called by itself (i.e. being called without being restricted to a tick phase)
+                    //player.travel(player.moveStrafing, player.moveVertical, player.moveForward);
+
+                    // For some reason this fixed the glitch caused by player.travel(. . .) where the player stops flying 1 tick to early, but it also messes with fallDistance a lot, so I am leaving this commented out.
+                    //player.setInWeb();
 
                     // If I did not include the if statement below, ticksOPElytraFlying would be called twice by being called once per tick phase. As a result the overpowered elytra would lose its durability twice as fast as the vanilla elytra. This is why in the previous commit the math for decrementing durability from the overpowered elytra had to be % 40 to match the vanilla elytra even though the vanilla elytra uses % 20 instead.
                     if(event.phase == TickEvent.Phase.START) // TickEvent.Phase.END would work too.
@@ -70,11 +81,13 @@ public class OPElytraHandlerServer
                             //++ticksOPElytraFlying;
                             ticksOPElytraFlying.put(player.getUniqueID(), 1 + ticksOPElytraFlying.getOrDefault(player.getUniqueID(), 0));
                         }
-                        else
+                        /*
+                        else    // After some testing, I have found that this else statement never gets executed.
                         {
                             //ticksOPElytraFlying = 0;
                             ticksOPElytraFlying.put(player.getUniqueID(), 0);
                         }
+                         */
                         if ((ticksOPElytraFlying.getOrDefault(player.getUniqueID(), 0) + 1) % 20 == 0)
                         {
                             chest.damageItem(1, player);
@@ -91,6 +104,10 @@ public class OPElytraHandlerServer
                         ticksOPElytraFlying.put(player.getUniqueID(), 0);   // The vanilla elytra resets its ticksElytraFlying to 0 when the elytra stops flying so the same will be done here as well.
                     }
                 }
+            }
+            else    // This "else" block of code fixes a bug where if the player is elytra flying with the overpowered elytra equipped, and then they take it off, and then they put it back on, the player automatically begins flying again (unlike the vanilla elytra which needs its flight to be manually reactivated).
+            {
+                shouldFly.put(player.getUniqueID(), false);
             }
 
             // Attempt 2 (did not work)

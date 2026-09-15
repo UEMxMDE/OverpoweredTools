@@ -51,7 +51,7 @@ public class PacketOPElytraFlying implements IMessage
             player.getServerWorld().addScheduledTask(() ->
             {
                 ItemStack itemstack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                if (itemstack.getItem() == ItemInit.OVERPOWERED_ELYTRA && OverpoweredElytra.isUsable(itemstack))
+                if (itemstack.getItem() instanceof OverpoweredElytra && OverpoweredElytra.isUsable(itemstack))
                 {
                     // This logic was copied from lines 1033-1045 of NetHandlerPlayServer.java
                     if (!player.onGround && player.motionY < 0.0D && !player.isElytraFlying() && !player.isInWater() && !player.capabilities.isFlying && !player.isRiding())

@@ -22,6 +22,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
+// Forge version used to develop this mod: 14.23.5.2860
+
 @Mod(modid = Reference.MOD_ID, version = Reference.VERSION, name = Reference.NAME/*, acceptedMinecraftVersions = Reference.MC_VERSION*/)
 public class OverpoweredTools
 {
