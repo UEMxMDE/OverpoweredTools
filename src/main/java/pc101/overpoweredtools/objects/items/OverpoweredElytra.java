@@ -31,6 +31,8 @@ import pc101.overpoweredtools.OverpoweredTools;
 import pc101.overpoweredtools.init.ItemInit;
 import pc101.overpoweredtools.util.Reference;
 
+import javax.annotation.Nullable;
+
 /*
 Mod that adds new elytras as separate items to the game (the code did not help much): https://www.curseforge.com/minecraft/mc-mods/powered-elytra
 - https://github.com/GlassPane/Powered-Elytra
@@ -43,8 +45,6 @@ Another mod I found that comes from this forum post: https://forums.minecraftfor
 Which then leads to this PR: https://github.com/MinecraftForge/MinecraftForge/pull/4476
 Which then (if you scroll down): leads to an elytra in this "test mod" by maxanier: https://github.com/pWn3d1337/MinecraftForge/blob/b0da9c0f92992eeeca588e8876b47286214f7ab3/src/test/java/net/minecraftforge/debug/ElytraTest.java
 */
-
-import javax.annotation.Nullable;
 
 public class OverpoweredElytra extends ItemElytra
 {
@@ -91,7 +91,7 @@ public class OverpoweredElytra extends ItemElytra
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
-        // The non-commented code in this method is copied from the vanilla ItemElytra.java file.
+        // The non-commented code in this method is copied and modified from the vanilla ItemElytra.java file.
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         EntityEquipmentSlot entityequipmentslot =
                 EntityEquipmentSlot.CHEST;  // In ItemElytra.java this line was EntityLiving.getSlotForItemStack(itemstack);. I had to change it to EntityEquipmentSlot.CHEST because otherwise right-clicking this elytra while holding it would not equip this elytra.
@@ -99,8 +99,9 @@ public class OverpoweredElytra extends ItemElytra
 
         if (itemstack1.isEmpty())
         {
-            playerIn.setItemStackToSlot(entityequipmentslot, itemstack.copy());
+            playerIn.inventory.armorInventory.set(EntityEquipmentSlot.CHEST.getIndex(),itemstack.copy());   // Replaced playerIn.setItemStackToSlot(...) to stop the "Gear equipped" sound from playing.
             itemstack.setCount(0);
+            playerIn.playSound(net.minecraft.init.SoundEvents.ITEM_ARMOR_EQIIP_ELYTRA,1.0F,1.0F);   // Added this line to make the "Elytra rustles" sound play.
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
         }
         else
