@@ -52,7 +52,7 @@ public class OPElytraHandlerServer
         {
             EntityPlayerMP player = (EntityPlayerMP) event.player;
             //player.sendMessage(new TextComponentString("shouldFly = " + shouldFly));
-            if(player.fallDistance != 0.0F) player.sendMessage(new TextComponentString("fallDistance = " + player.fallDistance));
+            //if(player.fallDistance != 0.0F) player.sendMessage(new TextComponentString("fallDistance = " + player.fallDistance));
             //if(player.motionY != 0.0D) player.sendMessage(new TextComponentString(event.phase + " motionY = " + player.motionY));
             //if(player.fallDistance != 0.0F) player.sendMessage(new TextComponentString(event.phase + " fallDistance = " + player.fallDistance));
             //if(player.motionX != 0.0D || player.motionY != 0.0D || player.motionZ != 0.0D) player.sendMessage(new TextComponentString(/*event.phase +*/ "\nmotionX = " + player.motionX + "\nmotionY = " + player.motionY + "\nmotionZ = " + player.motionZ));
